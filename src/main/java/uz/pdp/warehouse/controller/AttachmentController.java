@@ -34,10 +34,4 @@ public class AttachmentController {
         return attachmentService.deleteAttachment(id);
     }
 
-    @PutMapping("/{id}")
-    public Result edit(MultipartHttpServletRequest request, @PathVariable Integer id) {
-        return attachmentService.editAttachment(request, id);
-    }
-
-
 }

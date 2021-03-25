@@ -70,27 +70,4 @@ public class AttachmentService {
         return new Result("file o`chirildi", true);
     }
 
-
-    @SneakyThrows
-    public Result editAttachment(MultipartHttpServletRequest request, Integer id) {
-        Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
-        if (!optionalAttachment.isPresent())
-            return new Result("Attachment topilmadi", false);
-
-        Iterator<String> fileNames = request.getFileNames();
-        MultipartFile file = request.getFile(fileNames.next());
-
-        Attachment attachment = optionalAttachment.get();
-        attachment.setName(file.getOriginalFilename());
-        attachment.setSize(file.getSize());
-        attachment.setContentType(file.getContentType());
-        Attachment saveAttachment = attachmentRepository.save(attachment);
-
-        AttachmentContent attachmentContent = new AttachmentContent();
-        attachmentContent.setAttachment(saveAttachment);
-        attachmentContent.setBytes(file.getBytes());
-        attachmentContentRepository.save(attachmentContent);
-        return new Result("Fayl tahrirlandi", true, attachment.getId());
-    }
-
 }
